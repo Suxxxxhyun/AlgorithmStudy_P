@@ -25,9 +25,9 @@ public class Solution42746 {
          */
         Arrays.sort(arr, (o1, o2) -> (o2 + o1).compareTo(o1 + o2));
 
-        for (int i = 0; i < arr.length; i++) {
+        /*for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " ");
-        }
+        }*/
 
         if (arr[0].equals("0")) {
             return "0";

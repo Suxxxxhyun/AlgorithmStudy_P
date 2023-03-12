@@ -16,6 +16,8 @@ class Solution92335 {
             System.out.print(temp[i] + " ");
         }*/
         for(int i=0; i<temp.length; i++){
+            //어떤 수를 진수변환한 값이 [110011]이라고 하면,
+            //[11#0#0#11]가 되고, 0과 0사이의 값으로 인해 빈 문자열이 들어가게 된다.
             if(temp[i].equals("")){
                 continue;
             }

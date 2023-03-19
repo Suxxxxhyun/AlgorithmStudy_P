@@ -5,7 +5,7 @@ package Level2;
 //2^14 + 각 경우의 수에 대해서 list에 이모티콘 플러스와 이모티콘 매출액을 확인한다.
 import java.util.*;
 
-class Solution153068 {
+class Solution150368 {
 
     int[] answer;
     //emoticons의 0번째부터 emoticons의 길이까지의 할인율

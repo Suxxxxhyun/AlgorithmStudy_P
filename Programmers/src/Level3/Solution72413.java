@@ -1,6 +1,8 @@
 package Level3;
 
 import java.util.*;
+
+//플로이드워셜 사용
 class Solution72413 {
 
     int answer = 0;

@@ -2,6 +2,7 @@ package Level2;
 
 import java.util.*;
 
+//https://tmdrl5779.tistory.com/219블로그 참조
 class Solution4289002 {
     List<String> candi = new ArrayList<>();
 

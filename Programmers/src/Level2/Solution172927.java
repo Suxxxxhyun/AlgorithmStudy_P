@@ -1,7 +1,7 @@
 package Level2;
 
 ///7:50 ~ 9:40 실패
-class Solution {
+class Solution172927 {
 
     int answer = Integer.MAX_VALUE;
 

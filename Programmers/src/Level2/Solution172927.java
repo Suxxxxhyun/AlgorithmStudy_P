@@ -1,107 +1,98 @@
 package Level2;
 
-//4:23 ~ 4:53
-//아 안돼..
-//애초에 곡괭이를 꼭 서로다른 3개를 고르라는 법이 없었음. 그래서 내 코드로 해결안됨.
-class Solution172927 {
+///7:50 ~ 9:40 실패
+class Solution {
 
-    //어떤 곡괭이를 어떤 순서로 고를지, 이를 위한 배열
-    //순서를 고려하며 중복을 허용하지 않는다.
-    //0번은 다이아, 1번은 철, 2번은 돌
-    int[] selected;
     int answer = Integer.MAX_VALUE;
 
     public int solution(int[] picks, String[] minerals) {
 
-        selected = new int[3];
-        pro(picks, minerals, 0);
+        pro(picks, minerals, 0, 0);
         return answer;
     }
 
-    void pro(int[] picks, String[] minerals, int idx){
-        if(idx == 3){
-            System.out.println("고른 인덱스");
-            for(int i=0; i<3; i++){
-                System.out.print(selected[i] + " ");
-            }
-            System.out.println();
-            System.out.println("고르고 난 뒤 상황");
-            for(int i=0; i<picks.length; i++){
-                System.out.print(picks[i] + " ");
-            }
-            System.out.println();
-            result(minerals,0,0,0);
+    //이때 idx는 minerals의 인덱스를 의미함.
+    //sum은 구한 피로도의 합
+    public void pro(int[] picks, String[] minerals, int idx, int sum){
+        if(idx >= minerals.length){
+            answer = Math.min(answer, sum);
             return;
         }
 
-        for(int cand=0; cand<3; cand++){
-            if(picks[cand] > 0){
-                selected[idx] = cand;
-                picks[cand]--;
-                pro(picks,minerals,idx + 1);
-                picks[cand]++;
-            }
-        }
-    }
-
-    void result(String[] minerals,int start,int sum,int idx){
-        if(start == minerals.length){
-            System.out.println(sum);
-            answer = Math.min(sum, answer);
+        if(picks[0] == 0 && picks[1] == 0 && picks[2] == 0){
+            answer = Math.min(answer,sum);
             return;
         }
 
-        System.out.println(sum);
+        int copy_sum = sum;
 
-        if(selected[idx] == 0){
-            if(start + 4 < minerals.length){
-                sum += 5;
-                result(minerals, start+4 , sum, idx+1);
-            } else {
-                int mod = minerals.length - start;
-                result(minerals, start+mod , sum + mod, idx+1);
-            }
-        } else if(selected[idx] == 1){
-            int s_idx = start;
-            int e_idx = start+4;
-            while(s_idx <= e_idx){
-                if(s_idx == minerals.length){
-                    break;
+        for(int cand = 0; cand < picks.length; cand++){
+            //다이아몬드 곡괭이를 이용할 경우
+            if(cand == 0){
+                if(picks[cand] > 0){
+                    picks[cand]--;
+                    int cnt = idx;
+                    for(int i=0; i<5; i++){
+                        if(cnt == minerals.length){
+                            break;
+                        }
+                        copy_sum += 1;
+                        cnt++;
+                    }
+                    //System.out.println(cnt);
+                    pro(picks, minerals, cnt, copy_sum);
+                    picks[cand]++;
+                    copy_sum = sum;
                 }
-                if(minerals[s_idx].equals("diamond")){
-                    sum += 5;
-                } else {
-                    sum += 1;
-                }
-                s_idx++;
             }
-            if(start + 4 < minerals.length){
-                result(minerals, start+4 , sum, idx+1);
-            } else {
-                int mod = minerals.length - start;
-                result(minerals, start+mod , sum, idx+1);
-            }
-        } else {
-            int s_idx = start;
-            int e_idx = start+4;
-            while(s_idx <= e_idx){
-                if(s_idx == minerals.length){
-                    break;
+            //철 곡괭이를 이용할 경우
+            else if(cand == 1){
+                if(picks[cand] > 0){
+                    picks[cand]--;
+                    int cnt = idx;
+                    for(int i=0; i<5; i++){
+                        if(cnt == minerals.length){
+                            break;
+                        }
+                        if(minerals[cnt].equals("diamond")){
+                            copy_sum += 5;
+                        } else {
+                            copy_sum += 1;
+                        }
+                        cnt++;
+                    }
+
+                    //System.out.println(cnt);
+                    //System.out.println("피로도" + copy_sum);
+                    pro(picks, minerals, cnt, copy_sum);
+                    picks[cand]++;
+                    copy_sum = sum;
                 }
-                if(minerals[s_idx].equals("diamond")){
-                    sum += 25;
-                } else if(minerals[s_idx].equals("iron")){
-                    sum += 5;
-                } else {
-                    sum += 1;
-                }
-                s_idx++;
             }
-            if(start + 4 < minerals.length){
-                result(minerals, start+4 , sum, idx+1);
-            } else {
-                int mod = minerals.length - start;
-                result(minerals, start+mod , sum, idx+1);
+            //돌 곡괭이를 이용할 경우
+            else{
+                if(picks[cand] > 0){
+                    picks[cand]--;
+                    int cnt = idx;
+                    for(int i=0; i<5; i++){
+                        if(cnt == minerals.length){
+                            break;
+                        }
+                        if(minerals[cnt].equals("diamond")){
+                            copy_sum += 25;
+                        } else if(minerals[cnt].equals("iron")){
+                            copy_sum += 5;
+                        } else {
+                            copy_sum += 1;
+                        }
+                        cnt++;
+                    }
+                    //System.out.println(cnt);
+                    //System.out.println("피로도" + copy_sum);
+                    pro(picks, minerals, cnt, copy_sum);
+                    picks[cand]++;
+                    copy_sum = sum;
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package Level2;
 
+//실패
 public class Solution161989 {
     public int solution(int n, int m, int[] section) {
         int answer = 0;

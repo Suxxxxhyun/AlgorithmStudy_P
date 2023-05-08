@@ -2,6 +2,7 @@ package Level1;
 
 import java.util.*;
 
+//내림차순을 적용한 코드
 public class Solution13580802 {
 
     int answer = 0;
